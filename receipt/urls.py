@@ -3,5 +3,5 @@ from django.urls import path
 from .views import receipt_list
 
 urlpatterns = [
-    path('', receipt_list.as_view()),
+    path('all/', receipt_list.as_view()),
 ]

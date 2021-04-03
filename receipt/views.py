@@ -11,8 +11,6 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Receipt
 from .serializers import ReceiptSerializer
 
-from json import dumps
-
 class receipt_list(APIView):
 
     permission_classes = [IsAuthenticated]
