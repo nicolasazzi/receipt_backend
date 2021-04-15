@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 
-from .serializers import RegistrationSerializer
+from .serializers import RegistrationSerializer, LoginInfoSerializer
 from .models import Account
 
 @api_view(['POST',])
@@ -37,3 +37,27 @@ def check_phone_view(request):
         return Response({'allowed': False,})
     except:
         return Response({'allowed': True,})
+
+
+@api_view(['POST',])
+@permission_classes([AllowAny])
+def login_view(request):
+
+    phone = request.data['phone_number']
+    password = request.data['password']
+    try:
+        account = Account.objects.get(phone_number=phone)
+        if not account.check_password(password):
+            print('entered')
+            raise Exception()
+
+        serializer = LoginInfoSerializer(account)
+        token = Token.objects.get(user=account).key
+
+        data = serializer.data
+        data['token'] = token
+        
+        return Response(data, status=200)
+    except Exception as e:
+        return Response({'response': str(e)}, status=404)
+
