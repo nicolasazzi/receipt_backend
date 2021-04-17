@@ -3,9 +3,11 @@ from django.db import models
 class Item(models.Model):
 
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=200)
     
     price = models.DecimalField(max_digits=20, decimal_places=2)
+    quantity = models.IntegerField(default=1)
+    category = models.CharField(default='other', max_length=50)
+    unit = models.CharField(default='pcs', max_length=10)
 
     receipt = models.ForeignKey("receipt.Receipt", on_delete=models.CASCADE)
 
