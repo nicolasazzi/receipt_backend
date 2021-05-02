@@ -16,7 +16,7 @@ class receipt_list(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        receipts = Receipt.objects.filter(owner=request.user)
+        receipts = Receipt.objects.filter(owner=request.user).order_by('purchase_date')
         serializer = GetReceiptSerializer(receipts, many=True)
         return Response(serializer.data)
 
@@ -34,3 +34,9 @@ class create_receipt(APIView):
         else:
             return Response(data={'errors': receipt.errors})
 
+class get_statistics(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        pass
