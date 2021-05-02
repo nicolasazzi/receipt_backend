@@ -16,7 +16,7 @@ class receipt_list(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        receipts = Receipt.objects.filter(owner=request.user).order_by('purchase_date')
+        receipts = Receipt.objects.filter(owner=request.user).order_by('-purchase_date')
         serializer = GetReceiptSerializer(receipts, many=True)
         return Response(serializer.data)
 
