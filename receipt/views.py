@@ -5,11 +5,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
 from .models import Receipt
-from .serializers import ReceiptSerializer
+from .serializers import GetReceiptSerializer, CreateReceiptSerializer
 
 class receipt_list(APIView):
 
@@ -17,9 +17,20 @@ class receipt_list(APIView):
 
     def get(self, request):
         receipts = Receipt.objects.filter(owner=request.user)
-        serializer = ReceiptSerializer(receipts, many=True)
+        serializer = GetReceiptSerializer(receipts, many=True)
         return Response(serializer.data)
 
+
+class create_receipt(APIView):
+
+    permission_classes = [AllowAny]
+    
     def post(self, request):
-        pass
+        receipt = CreateReceiptSerializer(data=request.data)
+        print(request.data)
+        if receipt.is_valid():
+            receipt.save()
+            return Response(status=200)
+        else:
+            return Response(data={'errors': receipt.errors})
 

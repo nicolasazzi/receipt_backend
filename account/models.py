@@ -31,7 +31,7 @@ class AccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
 
-    phone_number = models.CharField(max_length=8, unique=True)
+    phone_number = models.CharField(max_length=8, unique=True, primary_key=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     creation_date = models.DateTimeField(auto_now=False, auto_now_add=True)

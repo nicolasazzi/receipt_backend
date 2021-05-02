@@ -14,7 +14,7 @@ class AccountAdmin(UserAdmin):
         'is_superuser',
         )
     search_fields = ('phone_number',)
-    readonly_fields = ('id', 'creation_date', 'last_login')
+    readonly_fields = ('creation_date', 'last_login')
     
     exclude = ('last_login',)
 
