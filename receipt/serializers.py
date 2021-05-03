@@ -24,7 +24,7 @@ class CreateReceiptSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Receipt
-        fields = ['owner', 'total', 'items']
+        fields = ['owner', 'total', 'purchase_date', 'items']
 
     def create(self, validated_data):
         items_data = validated_data.pop('item_set')
